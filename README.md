@@ -1,4 +1,4 @@
-# ML-Signal-Processing
+# Robotic Arm
 
 ## External Sources used
 - [cortex API example](https://github.com/Emotiv/cortex-example)
