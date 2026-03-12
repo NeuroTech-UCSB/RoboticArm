@@ -1,5 +1,9 @@
 # Robotic Arm
 
+## Helpful Docs
+- [Cortex API Documentation](https://emotiv.gitbook.io/cortex-api)
+- [Insight 2 User Manual](https://emotiv.gitbook.io/insight-2-user-manual/)
+
 ## External Sources used
 - [cortex API example](https://github.com/Emotiv/cortex-example)
 
