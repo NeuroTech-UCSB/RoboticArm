@@ -1,4 +1,4 @@
-from cortex_bridge import run_bridge
+from .bridge import run_bridge
 
 import argparse
 import asyncio
