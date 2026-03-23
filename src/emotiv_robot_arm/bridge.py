@@ -37,9 +37,6 @@ import time
 import serial
 import websockets
 
-
-
-
 # Mental-command action -> one-letter Arduino command.
 # TODO: Confirm with Emotiv docs if Cortex sends "rotate left" or "rotate_left" etc. and adjust parsing logic accordingly.
 ACTION_TO_CMD = {
