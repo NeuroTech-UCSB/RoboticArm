@@ -17,11 +17,14 @@ def setup_project_secrets():
     if not client_secret:
         print("❌ Error: Client Secret cannot be empty.")
         return
-
+    
+    license_key = input("Enter your License Key (optional): ").strip()
+    
     # 2. Create/Update the .env file
     with open(env_file, "w") as f:
         f.write(f"CLIENT_ID={client_id}\n")
         f.write(f"CLIENT_SECRET={client_secret}\n")
+        f.write(f"LICENSE_KEY={license_key}\n")
     
     print(f"✅ Created {env_file}")
 
