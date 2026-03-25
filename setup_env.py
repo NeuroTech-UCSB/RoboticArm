@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 def setup_project_secrets():
-    env_file = Path(".env")
+    env_file = Path("tests/.env")
     
     # 1. Prompt for the API Key
     print("--- 🔐 Project Secret Setup ---")

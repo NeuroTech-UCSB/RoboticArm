@@ -1,4 +1,4 @@
-from .bridge import run_bridge
+from emotiv_robot_arm.bridge import run_bridge
 
 import argparse
 import asyncio
@@ -17,15 +17,18 @@ def load_env():
     client_secret = None
     license_key = None
 
-    with open('data.txt', 'r', encoding='utf-8') as file:
-        for line in file:
-            line = line.strip()
-            if line.startswith("CLIENT_ID="):
-                client_id = line.split("=", 1)[1].strip()
-            elif line.startswith("CLIENT_SECRET="):
-                client_secret = line.split("=", 1)[1].strip()
-            elif line.startswith("LICENSE_KEY="):
-                license_key = line.split("=", 1)[1].strip()
+    try:
+        with open('.env', 'r', encoding='utf-8') as file:
+            for line in file:
+                line = line.strip()
+                if line.startswith("CLIENT_ID="):
+                    client_id = line.split("=", 1)[1].strip()
+                elif line.startswith("CLIENT_SECRET="):
+                    client_secret = line.split("=", 1)[1].strip()
+                elif line.startswith("LICENSE_KEY="):
+                    license_key = line.split("=", 1)[1].strip()
+    except FileNotFoundError:
+        raise FileNotFoundError(".env file not found. Did you run setup_env.py?")
 
     if not client_id:
         raise ValueError("CLIENT_ID not found! Did you run setup_env.py?")

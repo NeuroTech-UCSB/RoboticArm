@@ -35,7 +35,8 @@ import json
 import time
 
 import serial
-import websockets
+import ssl
+from websockets.asyncio.client import connect
 
 # Mental-command action -> one-letter Arduino command.
 # TODO: Confirm with Emotiv docs if Cortex sends "rotate left" or "rotate_left" etc. and adjust parsing logic accordingly.
@@ -244,8 +245,10 @@ async def run_bridge(serial_port, baud, threshold, cooldown, cortex_url, client_
         cooldown=cooldown,
     )
     try:
-        # SSL=True because Cortex endpoint is wss://
-        async with websockets.connect(cortex_url, ssl=True) as ws:
+        ssl_context = ssl._create_unverified_context(cafile=certifi.where())
+
+        # TODO: SSL=True because Cortex endpoint is wss://
+        async with connect(cortex_url, ssl=ssl_context) as ws:
             cortex = CortexClient(ws, debug=debug)
 
             # 1) Authorize app credentials and receive short-lived token.
