@@ -36,6 +36,7 @@ import time
 
 import serial
 import ssl
+import certifi
 from websockets.asyncio.client import connect
 
 # Mental-command action -> one-letter Arduino command.
