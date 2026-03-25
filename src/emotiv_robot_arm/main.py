@@ -2,45 +2,19 @@ from emotiv_robot_arm.bridge import run_bridge
 
 import argparse
 import asyncio
+from dotenv import load_dotenv
+import os
+
 
 # ===== CONFIGURATION =====
-# Default values keep command line simpler for quick demos.
+load_dotenv()
 DEFAULT_CORTEX_URL = "wss://localhost:6868"
 DEFAULT_BAUD = 115200
 DEFAULT_CONF_THRESHOLD = 0.45
 DEFAULT_COOLDOWN_SEC = 0.25
-
-
-# ===== ENV LOADING =====
-def load_env():
-    client_id = None
-    client_secret = None
-    license_key = None
-
-    try:
-        with open('.env', 'r', encoding='utf-8') as file:
-            for line in file:
-                line = line.strip()
-                if line.startswith("CLIENT_ID="):
-                    client_id = line.split("=", 1)[1].strip()
-                elif line.startswith("CLIENT_SECRET="):
-                    client_secret = line.split("=", 1)[1].strip()
-                elif line.startswith("LICENSE_KEY="):
-                    license_key = line.split("=", 1)[1].strip()
-    except FileNotFoundError:
-        raise FileNotFoundError(".env file not found. Did you run setup_env.py?")
-
-    if not client_id:
-        raise ValueError("CLIENT_ID not found! Did you run setup_env.py?")
-
-    if not client_secret:
-        raise ValueError("CLIENT_SECRET not found! Did you run setup_env.py?")
-    
-    # LICENSE_KEY is optional, so we won't raise an error if it's missing. Just print a warning.
-    if not license_key:
-        print("⚠️  LICENSE_KEY not found. Continuing without license key (if your app doesn't require one).")
-
-    return client_id, client_secret, license_key
+CLIENT_ID = os.getenv("EMOTIV_CLIENT_ID")
+CLIENT_SECRET = os.getenv("EMOTIV_CLIENT_SECRET")
+LICENSE_KEY = os.getenv("EMOTIV_LICENSE_KEY")
 
 # ===== CLI ARGUMENTS =====
 def build_parser():
@@ -59,7 +33,6 @@ def build_parser():
 
 # ===== ENTRY POINT =====
 def main():
-    client_id, client_secret, license_key = load_env()
     args = build_parser().parse_args()
     try:
         # Run async workflow (WebSocket + stream loop) inside event loop.
@@ -69,9 +42,9 @@ def main():
             threshold=args.threshold,
             cooldown=args.cooldown,
             cortex_url=args.cortex_url,
-            client_id=client_id,
-            client_secret=client_secret,
-            license_key=license_key,
+            client_id=CLIENT_ID,
+            client_secret=CLIENT_SECRET,
+            license_key=LICENSE_KEY,
             headset_id=args.headset_id,
             profile=args.profile,
             debug=args.debug

@@ -1,17 +1,23 @@
+import os
+
 from emotiv_robot_arm.bridge import CortexClient, parse_com_event
-from emotiv_robot_arm.main import load_env
 
 import asyncio
 from websockets.asyncio.client import connect
 import ssl
 import certifi
 import json
+from dotenv import load_dotenv
 
 # ===== CONFIGURATION =====
+load_dotenv()
 # Default values keep command line simpler for quick demos.
 DEFAULT_CORTEX_URL = "wss://localhost:6868"
 DEFAULT_CONF_THRESHOLD = 0.45
 DEFAULT_COOLDOWN_SEC = 0.25
+CLIENT_ID = os.getenv("EMOTIV_CLIENT_ID")
+CLIENT_SECRET = os.getenv("EMOTIV_CLIENT_SECRET")
+LICENSE_KEY = os.getenv("EMOTIV_LICENSE_KEY")
 
 async def cortex_connect(headset_id = None, profile = None):
     ssl_context = ssl._create_unverified_context(cafile=certifi.where())
@@ -21,11 +27,10 @@ async def cortex_connect(headset_id = None, profile = None):
         async with connect(DEFAULT_CORTEX_URL, ssl=ssl_context) as ws:
             cortex = CortexClient(ws, debug=True)
 
-            client_id, client_secret, license_key = load_env()
             token = await cortex.authorize(
-                client_id=client_id,
-                client_secret=client_secret,
-                license_key=license_key,
+                client_id=CLIENT_ID,
+                client_secret=CLIENT_SECRET,
+                license_key=LICENSE_KEY,
             )
 
             headsets = await cortex.query_headsets()

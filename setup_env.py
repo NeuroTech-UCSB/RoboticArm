@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 def setup_project_secrets():
-    env_file = Path("tests/.env")
+    env_file = Path(".env")
     
     # 1. Prompt for the API Key
     print("--- 🔐 Project Secret Setup ---")
@@ -22,9 +22,9 @@ def setup_project_secrets():
     
     # 2. Create/Update the .env file
     with open(env_file, "w") as f:
-        f.write(f"CLIENT_ID={client_id}\n")
-        f.write(f"CLIENT_SECRET={client_secret}\n")
-        f.write(f"LICENSE_KEY={license_key}\n")
+        f.write(f"EMOTIV_CLIENT_ID={client_id}\n")
+        f.write(f"EMOTIV_CLIENT_SECRET={client_secret}\n")
+        f.write(f"EMOTIV_LICENSE_KEY={license_key}\n")
     
     print(f"✅ Created {env_file}")
 
