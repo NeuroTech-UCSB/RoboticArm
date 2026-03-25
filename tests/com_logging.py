@@ -52,6 +52,9 @@ async def cortex_connect(headset_id = None, profile = None):
             await cortex.subscribe_com(token, session_id)
 
             print("[RUN] Waiting for mental commands (Ctrl+C to stop)")
+            print()
+            print("action: ")
+            print("confidence: ")
             while True:
                 # Receive any event (stream data, status, etc.)
                 raw = await ws.recv()
@@ -62,6 +65,7 @@ async def cortex_connect(headset_id = None, profile = None):
                     # Many messages are not command events; skip them.
                     continue
 
+                print("\033[F\033[K\033[F\033[K", end="")
                 print("action: ", action)
                 print("confidence: ", confidence)
 
