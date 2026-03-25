@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "emotiv_robot_arm"
+version = "0.1.0"
+description = "Brain Controlled Robotic Arm"
+dependencies = [
+    "certifi>=2026.2.25",
+    "dotenv>=0.9.9",
+    "pyserial>=3.5",
+    "python-dotenv>=1.2.2",
+    "websockets>=16.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
