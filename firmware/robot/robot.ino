@@ -112,7 +112,7 @@ void processLine(char* line) {
     if (applyCommand(legacyCmd)) {
       sendAck(-1, legacyCmd);
     } else {
-      sendErr(-1, "bad_legacy_cmd");
+      // sendErr(-1, "bad_legacy_cmd");
     }
     return;
   }

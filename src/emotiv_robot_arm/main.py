@@ -23,7 +23,7 @@ def build_parser():
     parser.add_argument("--cortex-url", default=DEFAULT_CORTEX_URL, help=f"Cortex WebSocket URL (default: {DEFAULT_CORTEX_URL})")
     parser.add_argument("--headset-id", default="", help="Optional specific headset ID")
     parser.add_argument("--profile", default="", help="Optional trained mental-command profile to load")
-    parser.add_argument("--serial-port", required=True, help="Arduino serial port (e.g. /dev/cu.usbmodem1101)")
+    parser.add_argument("--serial-port", required=True, help="Arduino serial port (e.g. /dev/cu.usbmodem1101 or COM5)")
     parser.add_argument("--baud", type=int, default=DEFAULT_BAUD, help=f"Serial baud (default: {DEFAULT_BAUD})")
     parser.add_argument("--threshold", type=float, default=DEFAULT_CONF_THRESHOLD, help="Min confidence to send command")
     parser.add_argument("--cooldown", type=float, default=DEFAULT_COOLDOWN_SEC, help="Seconds between same command repeats")

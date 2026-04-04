@@ -74,7 +74,7 @@ async def cortex_connect(headset_id = None, profile = None):
 
 def main():
     try:
-        asyncio.run(cortex_connect())
+        asyncio.run(cortex_connect('INSIGHT2-4F2E7C45'))
     except KeyboardInterrupt:
         print("\n[SYS] Stopped")
     except Exception as exc:

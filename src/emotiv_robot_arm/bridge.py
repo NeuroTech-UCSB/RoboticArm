@@ -42,12 +42,13 @@ from websockets.asyncio.client import connect
 # Mental-command action -> one-letter Arduino command.
 # TODO: Confirm with Emotiv docs if Cortex sends "rotate left" or "rotate_left" etc. and adjust parsing logic accordingly.
 ACTION_TO_CMD = {
+    "neutral": "N",
     "push": "F",
     "pull": "B", 
     "rotate_left": "L",
     "rotate_right": "R",
-    "up": "U",
-    "down": "D",
+    "lift": "U",
+    "drop": "D",
 }
 
 
@@ -84,7 +85,7 @@ class ArduinoBridge:
 
         if cmd is None:
             # Not in mapping table.
-            print(f"[COM] Ignored action '{action_norm}' (push-only mode)")
+            print(f"[COM] Ignored action '{action_norm}'")
             return
         if confidence < self.threshold:
             # Confidence too weak; avoid noisy activations.
@@ -290,6 +291,11 @@ async def run_bridge(serial_port, baud, threshold, cooldown, cortex_url, client_
                     continue
                 # Apply threshold/cooldown and send serial command.
                 serial_bridge.send_if_valid(action, confidence)
+
+                # try:
+                #     print(serial_bridge.arduino.readline().decode('utf-8').rstrip())
+                # except UnicodeDecodeError:
+                #     print("[RUN] Couldn't decode message")
     finally:
         serial_bridge.close()
 
