@@ -87,13 +87,13 @@ class ArduinoBridge:
             # Not in mapping table.
             print(f"[COM] Ignored action '{action_norm}'")
             return
+        if self.last_cmd == cmd and (now - self.last_sent_at) < self.cooldown:
+            # Same command repeated too quickly.
+            return
         if action_norm != 'neutral' and confidence < self.threshold:
             # Confidence too weak; avoid noisy activations.
             print(f"[COM] {action_norm} conf={confidence:.2f} below threshold {self.threshold:.2f}")
             cmd = ACTION_TO_CMD.get('neutral')
-        if self.last_cmd == cmd and (now - self.last_sent_at) < self.cooldown:
-            # Same command repeated too quickly.
-            return
 
         # Send one line command so Arduino can parse it easily.
         # Example bytes sent: "F\n"
