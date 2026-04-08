@@ -12,33 +12,17 @@
 // - ACK,<seq>,<cmd>,<arduino_us>
 // - ERR,<seq>,<reason>
 
-// Easy explanation:
-// - Python sends text commands over USB serial.
-// - Arduino reads one line at a time.
-// - Arduino moves servo(s), then replies ACK or ERR.
-
 // Reference links used for this file:
 // - Arduino Servo library reference:
 //   https://docs.arduino.cc/libraries/servo/
 // - Arduino Serial reference: 
 //   https://www.arduino.cc/reference/en/language/functions/communication/serial/
 
-// ===== 1) SERVO SETUP =====
-// Update pins to match your robot arm wiring.
-Servo baseServo;
-Servo shoulderServo;
-Servo elbowServo;
 Servo gripperServo;
 
-// Current servo angles (degrees). Start at neutral midpoint.
-// If movement direction is opposite of your arm setup, reverse +/- in applyCommand().
-int basePos = 90;
-int shoulderPos = 90;
-int elbowPos = 90;
 int gripperPos = 45;
 
 // Movement increment per command.
-// Bigger STEP = faster/larger jump each command.
 const int STEP = 4;
 
 // Serial line buffer for incoming command text.
@@ -46,34 +30,24 @@ const int SERIAL_BUF_LEN = 64;
 char serialBuf[SERIAL_BUF_LEN];
 uint8_t serialIdx = 0;
 
-// ===== 2) HELPERS =====
-// Keep angle values inside servo-safe range.
 int clampInt(int value, int low, int high) {
   if (value < low) return low;
   if (value > high) return high;
   return value;
 }
 
-// Write all current angles to servos.
 void applyPose() {
-  baseServo.write(basePos);
-  shoulderServo.write(shoulderPos);
-  elbowServo.write(elbowPos);
   gripperServo.write(gripperPos);
 }
 
-// ===== 3) COMMAND LOGIC =====
-// Apply one command letter. Return true if recognized.
 bool applyCommand(char cmd) {
   switch (cmd) {
-    case 'F': gripperPos = 0; break;  // current project: "push" raises elbow angle
-    case 'B': gripperPos = 90; break;  // current project: "push" raises elbow angle
-    // case 'F': elbowPos += STEP; break;  // current project: "push" raises elbow angle
-    case 'N': break; // neutral: no movement
+    case 'F': gripperPos = 0; break;
+    case 'B': gripperPos = 90; break;
+    case 'N': break;
     default: return false;
   }
 
-  // Clamp all joints after any change.
   basePos = clampInt(basePos, 0, 180);
   shoulderPos = clampInt(shoulderPos, 0, 180);
   elbowPos = clampInt(elbowPos, 0, 180);
@@ -147,15 +121,11 @@ void processLine(char* line) {
   sendAck(seq, cmd);
 }
 
-// ===== 4) ARDUINO LIFECYCLE =====
 void setup() {
   // Baud rate must match Python side.
   Serial.begin(115200);
 
   // Attach each servo to its PWM pin.
-  baseServo.attach(3);
-  shoulderServo.attach(5);
-  elbowServo.attach(6);
   gripperServo.attach(2);
 
   // Move to initial pose once at startup.
