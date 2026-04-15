@@ -21,3 +21,17 @@ If the virtual environment is set, setup the environment by
 Install all packages with
 
 `pip install -r requirements.txt`
+
+Setup Client ID and Client Secrets with
+
+`python setup_env.py`
+
+## Running the project
+
+Run `pythom -m emotiv_robot_arm.main -h` to see a usage guide.
+
+The only required argument is `--serial-port`. This specifies the serial port the Arduino board is connected to.
+For Windows this should look something like `COM5`. Find the correct port via Arduino IDE.
+
+`--headset-id` may also need to be specified if more than one device is configured in Emotiv Launcher.
+The headset ID should look something like `INSIGHT2-AAAA0000`.
