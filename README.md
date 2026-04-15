@@ -35,3 +35,11 @@ For Windows this should look something like `COM5`. Find the correct port via Ar
 
 `--headset-id` may also need to be specified if more than one device is configured in Emotiv Launcher.
 The headset ID should look something like `INSIGHT2-AAAA0000`.
+
+## Installing the project
+
+For more convenient execution, one may want to install this project locally.
+
+Run `pip install -e .` to install the project as a script.
+
+After this, running `neuroarm` also executes the project.
