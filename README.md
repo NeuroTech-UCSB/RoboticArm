@@ -43,3 +43,8 @@ For more convenient execution, one may want to install this project locally.
 Run `pip install -e .` to install the project as a script.
 
 After this, running `neuroarm` also executes the project.
+
+## Testing
+
+For example, to see details for the mental command logging test script, run
+`python -m tests.com_logging -h`
