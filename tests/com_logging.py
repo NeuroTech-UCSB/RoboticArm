@@ -1,8 +1,9 @@
 import os
 
-from emotiv_robot_arm.bridge import CortexClient, parse_com_event
+from neuroarm.bridge import CortexClient, parse_com_event
 
 import asyncio
+import argparse
 from websockets.asyncio.client import connect
 import ssl
 import certifi
@@ -19,12 +20,12 @@ CLIENT_ID = os.getenv("EMOTIV_CLIENT_ID")
 CLIENT_SECRET = os.getenv("EMOTIV_CLIENT_SECRET")
 LICENSE_KEY = os.getenv("EMOTIV_LICENSE_KEY")
 
-async def cortex_connect(headset_id = None, profile = None):
+async def cortex_connect(cortex_url = DEFAULT_CORTEX_URL, headset_id = None, profile = None):
     ssl_context = ssl._create_unverified_context(cafile=certifi.where())
 
     try:
         # SSL=True because Cortex endpoint is wss://
-        async with connect(DEFAULT_CORTEX_URL, ssl=ssl_context) as ws:
+        async with connect(cortex_url, ssl=ssl_context) as ws:
             cortex = CortexClient(ws, debug=True)
 
             token = await cortex.authorize(
@@ -72,9 +73,23 @@ async def cortex_connect(headset_id = None, profile = None):
     except Exception as e:
         print(f"[ERROR] {e}")
 
+# ===== CLI ARGUMENTS =====
+def build_parser():
+    parser = argparse.ArgumentParser(description="Emotiv Cortex API mental command logging test.")
+    # Required credentials/ports are passed through command line arguments.
+    parser.add_argument("--cortex-url", default=DEFAULT_CORTEX_URL, help=f"Cortex WebSocket URL (default: {DEFAULT_CORTEX_URL})")
+    parser.add_argument("--headset-id", default="", help="Optional specific headset ID")
+    parser.add_argument("--profile", default="", help="Optional trained mental-command profile to load")
+    return parser
+
 def main():
+    args = build_parser().parse_args()
     try:
-        asyncio.run(cortex_connect('INSIGHT2-4F2E7C45'))
+        asyncio.run(cortex_connect(
+            cortex_url=args.cortex_url,
+            headset_id=args.headset_id,
+            profile=args.profile
+        ))
     except KeyboardInterrupt:
         print("\n[SYS] Stopped")
     except Exception as exc:
