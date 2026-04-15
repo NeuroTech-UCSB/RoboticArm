@@ -147,6 +147,15 @@ class CortexClient:
                 return msg
             # Ignore stream events here; they are handled in the stream loop later.
 
+    async def requestAccess(self, client_id, client_secret):
+        res = await self.request(
+            "requestAccess",
+            {
+                "clientId": client_id,
+                "clientSecret": client_secret
+            }
+        )
+
     async def authorize(self, client_id, client_secret, license_key="", debit=1):
         res = await self.request(
             "authorize",
@@ -252,6 +261,11 @@ async def run_bridge(serial_port, baud, threshold, cooldown, cortex_url, client_
         # TODO: SSL=True because Cortex endpoint is wss://
         async with connect(cortex_url, ssl=ssl_context) as ws:
             cortex = CortexClient(ws, debug=debug)
+
+            await cortex.requestAccess(
+                client_id=client_id,
+                client_secret=client_secret
+            )
 
             # 1) Authorize app credentials and receive short-lived token.
             # Token is required for almost all Cortex API calls after login.
