@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "emotiv_robot_arm"
+name = "neuroarm"
 version = "0.1.0"
 description = "Brain Controlled Robotic Arm"
 dependencies = [
@@ -13,3 +13,10 @@ dependencies = [
     "python-dotenv>=1.2.2",
     "websockets>=16.0"
 ]
+
+[project.scripts]
+neuroarm = "neuroarm.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ["firmware*", "tests*"]

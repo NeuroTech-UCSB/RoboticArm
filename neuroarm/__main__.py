@@ -1,4 +1,4 @@
-from emotiv_robot_arm.bridge import run_bridge
+from .bridge import run_bridge
 
 import argparse
 import asyncio

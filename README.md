@@ -1,4 +1,4 @@
-# Robotic Arm
+# NeuroArm
 
 ## Helpful Docs
 - [Cortex API Documentation](https://emotiv.gitbook.io/cortex-api)
@@ -28,7 +28,7 @@ Setup Client ID and Client Secrets with
 
 ## Running the project
 
-Run `pythom -m emotiv_robot_arm -h` to see a usage guide.
+Run `pythom -m neuroarm -h` to see a usage guide.
 
 The only required argument is `--serial-port`. This specifies the serial port the Arduino board is connected to.
 For Windows this should look something like `COM5`. Find the correct port via Arduino IDE.
