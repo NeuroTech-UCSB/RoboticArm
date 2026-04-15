@@ -10,8 +10,8 @@ dependencies = [
     "certifi>=2026.2.25",
     "dotenv>=0.9.9",
     "pyserial>=3.5",
-    "python-dotenv>=1.2.2",
-    "websockets>=16.0"
+    "python-dotenv>=1.2.1",
+    "websockets>=15.0"
 ]
 
 [project.scripts]

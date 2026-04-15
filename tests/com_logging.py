@@ -27,6 +27,11 @@ async def cortex_connect(cortex_url = DEFAULT_CORTEX_URL, headset_id = None, pro
         # SSL=True because Cortex endpoint is wss://
         async with connect(cortex_url, ssl=ssl_context) as ws:
             cortex = CortexClient(ws, debug=True)
+            
+            await cortex.requestAccess(
+                client_id=CLIENT_ID,
+                client_secret=CLIENT_SECRET,
+            )
 
             token = await cortex.authorize(
                 client_id=CLIENT_ID,
