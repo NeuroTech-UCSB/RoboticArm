@@ -11,7 +11,7 @@
 //PLEASE KEEP IN MIND THAT THE rotation OF SERVO 3 is REVERSED, 
 //wrt to the coordinate system. if axis of rotation is x-axis, then increasing angle results in CW rotation, rather than counter clockwise rotation
 
-#define SERVO4_PIN 12 
+#define SERVO4_PIN 6 
 #define NUM_SERVOS 4
 
 #define SERVO_MIN 0

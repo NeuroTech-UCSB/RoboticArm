@@ -8,9 +8,9 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "C:/Users/vihan/Neurotech/Robotic Arm/Robotic Arm/include",
-                "C:/Users/vihan/Neurotech/Robotic Arm/Robotic Arm/src",
-                "C:/Users/vihan/Neurotech/Robotic Arm/Robotic Arm/.pio/libdeps/uno/Servo/src",
+                "C:/Users/vihan/Neurotech/Robotic Arm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/include",
+                "C:/Users/vihan/Neurotech/Robotic Arm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/src",
+                "C:/Users/vihan/Neurotech/Robotic Arm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/.pio/libdeps/commands/Servo/src",
                 "C:/Users/vihan/.platformio/packages/framework-arduino-avr/cores/arduino",
                 "C:/Users/vihan/.platformio/packages/framework-arduino-avr/variants/standard",
                 "C:/Users/vihan/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
@@ -23,9 +23,9 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "C:/Users/vihan/Neurotech/Robotic Arm/Robotic Arm/include",
-                    "C:/Users/vihan/Neurotech/Robotic Arm/Robotic Arm/src",
-                    "C:/Users/vihan/Neurotech/Robotic Arm/Robotic Arm/.pio/libdeps/uno/Servo/src",
+                    "C:/Users/vihan/Neurotech/Robotic Arm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/include",
+                    "C:/Users/vihan/Neurotech/Robotic Arm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/src",
+                    "C:/Users/vihan/Neurotech/Robotic Arm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/.pio/libdeps/commands/Servo/src",
                     "C:/Users/vihan/.platformio/packages/framework-arduino-avr/cores/arduino",
                     "C:/Users/vihan/.platformio/packages/framework-arduino-avr/variants/standard",
                     "C:/Users/vihan/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
