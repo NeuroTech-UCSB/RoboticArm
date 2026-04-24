@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <Servo.h>
+#include <ServoEasing.hpp>
 
 #define LED 13
 #define MAX_TOKENS 8
@@ -18,9 +18,9 @@
 #define SERVO_MAX 180
 
 //DEPENDS ON THE MECHANICAL SYSTEM, MAYBE CHANGE LATER FOR DIFFERENT ROBOTIC ARMS
-Servo servos[NUM_SERVOS];
+ServoEasing servos[NUM_SERVOS];
 const uint8_t SERVO_PINS[NUM_SERVOS] = {SERVO1_PIN, SERVO2_PIN, SERVO3_PIN, SERVO4_PIN};
-const uint8_t SERVO_MAX_ANGLE[NUM_SERVOS] = {180, 135, 175, 120};
+const uint8_t SERVO_MAX_ANGLE[NUM_SERVOS] = {180, 135, 175, 150};
 
 //Should stay at around 90 for "mid position"
 const uint8_t SERVO_INIT_ANGLE[NUM_SERVOS] = {97, 95, 90, 90};
@@ -40,6 +40,9 @@ void setup() {
 
   for (int i = 0; i < NUM_SERVOS; i++) {
     servos[i].attach(SERVO_PINS[i]);
+    //servos[i].setEasingType(EASE_QUADRATIC_IN_OUT);
+    servos[i].setEasingType(EASE_LINEAR);
+    servos[i].setSpeed(100);
   }
 
   for (int i = 0; i < NUM_SERVOS; i++) {
@@ -56,7 +59,9 @@ void writeAngle(int servoNumber, int angle) {
     angle = SERVO_MAX_ANGLE[servoIndex];
   }
 
-  servos[servoIndex].write(angle);
+  //servos[servoIndex].write(angle);
+  servos[servoIndex].startEaseTo(angle);
+
   Serial.print("Servo ");
   Serial.print(servoNumber);
   Serial.print(" angle set to: ");
