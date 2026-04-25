@@ -168,9 +168,9 @@ void loop() {
 
   readCommands();
 
-  if (cmd_state == PUSH) {
+  if (cmd_state == PUSH && state == 0) {
     state++;
-    if (SERVO_ANGLES[SERVO2] > SERVO_MIN_ANGLE[SERVO2] && SERVO_ANGLES[SERVO3] > SERVO_MIN_ANGLE[SERVO3] && state == 1) {
+    if (SERVO_ANGLES[SERVO2] > SERVO_MIN_ANGLE[SERVO2] && SERVO_ANGLES[SERVO3] > SERVO_MIN_ANGLE[SERVO3]) {
       Serial.println("Pushing...");
       servos[SERVO2].setEaseTo(SERVO_MAX_ANGLE[SERVO2]);
       servos[SERVO3].setEaseTo(SERVO_MAX_ANGLE[SERVO3]);
@@ -185,9 +185,9 @@ void loop() {
     }
   }
 
-  else if ( cmd_state == PULL) {
+  else if ( cmd_state == PULL && state ==1) {
     state++;
-    if (SERVO_ANGLES[SERVO2] <= SERVO_MAX_ANGLE[SERVO2] && SERVO_ANGLES[SERVO3] <= SERVO_MAX_ANGLE[SERVO3] && state == 2){
+    if (SERVO_ANGLES[SERVO2] <= SERVO_MAX_ANGLE[SERVO2] && SERVO_ANGLES[SERVO3] <= SERVO_MAX_ANGLE[SERVO3]){
       Serial.println("Pulling...");
       servos[SERVO2].setEaseTo(SERVO_MIN_ANGLE[SERVO2]);
       servos[SERVO3].setEaseTo(SERVO_MIN_ANGLE[SERVO3]);
@@ -201,7 +201,7 @@ void loop() {
     }
   }
 
-  else if (cmd_state == LEFT && state == 3) {
+  else if (cmd_state == LEFT && state == 2) {
     state++;
     if (SERVO_ANGLES[BASE_SERVO] < SERVO_MAX_ANGLE[BASE_SERVO]) {
       Serial.println("Rotating...");
