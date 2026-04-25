@@ -1,42 +1,13 @@
 #include <Arduino.h>
-#include <Servo.h>
+#include <ServoEasing.h>
 
-#define LED 13
-#define MAX_TOKENS 8
+#include "servo_config.h"
 
-//SERVO DEFINITIONS
-#define SERVO1_PIN 9 
-#define SERVO2_PIN 10
-#define SERVO3_PIN 11  
-//PLEASE KEEP IN MIND THAT THE rotation OF SERVO 3 is REVERSED, 
-//wrt to the coordinate system. if axis of rotation is x-axis, then increasing angle results in CW rotation, rather than counter clockwise rotation
-
-#define SERVO4_PIN 6 
-#define NUM_SERVOS 4
-
-#define SERVO_MIN 0
-#define SERVO_MAX 180
-
-//DEPENDS ON THE MECHANICAL SYSTEM, MAYBE CHANGE LATER FOR DIFFERENT ROBOTIC ARMS
-Servo servos[NUM_SERVOS];
-const uint8_t SERVO_PINS[NUM_SERVOS] = {SERVO1_PIN, SERVO2_PIN, SERVO3_PIN, SERVO4_PIN};
-const uint8_t SERVO_MAX_ANGLE[NUM_SERVOS] = {180, 135, 175, 120};
-
-//Should stay at around 90 for "mid position"
-const uint8_t SERVO_INIT_ANGLE[NUM_SERVOS] = {97, 95, 90, 90};
-const uint8_t SERVO_MIN_ANGLE[NUM_SERVOS] = {0, 15, 30, 40};
-
-//Pick and hold position
-//{x, 15, 100, 70}
-
-
-void writeAngle(int servoNumber, int angle);
 void setup() {
   pinMode(LED, OUTPUT);
   digitalWrite(LED, LOW);
 
   Serial.begin(115200);
-
 
   for (int i = 0; i < NUM_SERVOS; i++) {
     servos[i].attach(SERVO_PINS[i]);
@@ -46,23 +17,6 @@ void setup() {
     writeAngle(i + 1, SERVO_INIT_ANGLE[i]);
   }
 }
-
-void writeAngle(int servoNumber, int angle) {
-  int servoIndex = servoNumber - 1;
-
-  if (angle < SERVO_MIN_ANGLE[servoIndex]) {
-    angle = SERVO_MIN_ANGLE[servoIndex];
-  } else if (angle > SERVO_MAX_ANGLE[servoIndex]) {
-    angle = SERVO_MAX_ANGLE[servoIndex];
-  }
-
-  servos[servoIndex].write(angle);
-  Serial.print("Servo ");
-  Serial.print(servoNumber);
-  Serial.print(" angle set to: ");
-  Serial.println(angle);
-}
-
 
 void readCommands() {
   if (!Serial.available()) return;

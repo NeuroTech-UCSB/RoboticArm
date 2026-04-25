@@ -1,53 +1,11 @@
 #include <Arduino.h>
-#include <Servo.h>
+#include "servo_config.h"
 
-#define LED 13
-#define MAX_TOKENS 8
-
-//SERVO DEFINITIONS
-#define SERVO1 0
-#define SERVO2 1
-#define SERVO3 2
-#define SEROV4 3
-
-#define SERVO1_PIN 9 
-#define SERVO2_PIN 10
-#define SERVO3_PIN 11  
-//PLEASE KEEP IN MIND THAT THE rotation OF SERVO 3 is REVERSED, 
-//wrt to the coordinate system. if axis of rotation is x-axis, then increasing angle results in CW rotation, rather than counter clockwise rotation
-
-#define SERVO4_PIN 6 
-#define NUM_SERVOS 4
-
-#define SERVO_MIN 0
-#define SERVO_MAX 180
-
-
-
-
-//DEPENDS ON THE MECHANICAL SYSTEM, MAYBE CHANGE LATER FOR DIFFERENT ROBOTIC ARMS
-Servo servos[NUM_SERVOS];
-#define BASE_SERVO 0
-#define CLAW_SERVO 3
-
-
-const float SERVO_PINS[NUM_SERVOS] = {SERVO1_PIN, SERVO2_PIN, SERVO3_PIN, SERVO4_PIN};
-
-const float SERVO_MAX_ANGLE[NUM_SERVOS] = {180, 135, 175, 120};
-//Initial angle should stay around 90 for "mid position"
-const float SERVO_INIT_ANGLE[NUM_SERVOS] = {97, 95, 135, 90};
-const float SERVO_MIN_ANGLE[NUM_SERVOS] = {0, 45, 90, 40};
-
-float SERVO_ANGLES[NUM_SERVOS] = {SERVO_INIT_ANGLE[0], SERVO_INIT_ANGLE[1], SERVO_INIT_ANGLE[2], SERVO_INIT_ANGLE[3]};
-
-
-void writeAngle(uint8_t servoIndex  , float angle);
 void setup() {
   pinMode(LED, OUTPUT);
   digitalWrite(LED, LOW);
 
   Serial.begin(115200);
-
 
   for (int i = 0; i < NUM_SERVOS; i++) {
     servos[i].attach(SERVO_PINS[i]);
@@ -57,28 +15,6 @@ void setup() {
     writeAngle(i + 1, SERVO_INIT_ANGLE[i]);
   }
 }
-
-
-
-
-void writeAngle(uint8_t servoIndex, float angle) {
-  //int servoIndex = servoNumber;
-
-  if (angle < SERVO_MIN_ANGLE[servoIndex]) {
-    angle = SERVO_MIN_ANGLE[servoIndex];
-  } else if (angle > SERVO_MAX_ANGLE[servoIndex]) {
-    angle = SERVO_MAX_ANGLE[servoIndex];
-  }
-
-  SERVO_ANGLES[servoIndex] = angle;
-
-  servos[servoIndex].write(angle);
-  //Serial.print("Servo ");
-  //Serial.print(servoIndex);
-  //Serial.print(" angle set to: ");
-  //Serial.println(angle);
-}
-
 
 int LED_state = 0;
 enum CMD_STATE {
@@ -90,6 +26,7 @@ enum CMD_STATE {
   CLOSE,
   NEUTRAL
 };
+
 CMD_STATE cmd_state = NEUTRAL;
 
 void readCommands() {
@@ -114,7 +51,7 @@ void readCommands() {
   }
 
   // Parse commands
-
+  
   //char * = nullptr;
   char * cmd = args[0]; 
   //long servoNumber = strtol(args[0], &servoEnd, 10);
