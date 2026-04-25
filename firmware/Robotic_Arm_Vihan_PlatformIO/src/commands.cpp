@@ -29,6 +29,7 @@ enum CMD_STATE {
 
 CMD_STATE cmd_state = NEUTRAL;
 
+
 void readCommands() {
   if (!Serial.available()) return;
 
@@ -51,7 +52,7 @@ void readCommands() {
   }
 
   // Parse commands
-  
+
   //char * = nullptr;
   char * cmd = args[0]; 
   //long servoNumber = strtol(args[0], &servoEnd, 10);

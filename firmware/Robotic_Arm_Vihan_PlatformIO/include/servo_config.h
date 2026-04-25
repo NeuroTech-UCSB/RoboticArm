@@ -29,12 +29,19 @@ ServoEasing servos[NUM_SERVOS];
 #define BASE_SERVO 0
 #define CLAW_SERVO 3
 
+//Link Lengths
+#define L1 63.5 //From Base to second Link
+#define L2 127  //From start of second link to end of grasper
+
 const float SERVO_PINS[NUM_SERVOS] = {SERVO1_PIN, SERVO2_PIN, SERVO3_PIN, SERVO4_PIN};
 
-const float SERVO_MAX_ANGLE[NUM_SERVOS] = {180, 135, 175, 120};
+const float SERVO_MAX_ANGLE[NUM_SERVOS] = {180, 180, 20, 180};
 //Initial angle should stay around 90 for "mid position"
-const float SERVO_INIT_ANGLE[NUM_SERVOS] = {97, 95, 135, 90};
-const float SERVO_MIN_ANGLE[NUM_SERVOS] = {0, 45, 90, 40};
+const float SERVO_INIT_ANGLE[NUM_SERVOS] = {97, 87, 20, 90};
+const float SERVO_MIN_ANGLE[NUM_SERVOS] = {0, 0, -160, 30};
+
+//used for IK calculations
+const float SERVO_ZERO_ANGLE[NUM_SERVOS] = {0, 0, 20, 0};
 
 float SERVO_ANGLES[NUM_SERVOS] = {SERVO_INIT_ANGLE[0], SERVO_INIT_ANGLE[1], SERVO_INIT_ANGLE[2], SERVO_INIT_ANGLE[3]};
 
@@ -42,7 +49,6 @@ float SERVO_ANGLES[NUM_SERVOS] = {SERVO_INIT_ANGLE[0], SERVO_INIT_ANGLE[1], SERV
 //{x, 15, 100, 70}
 
 void writeAngle(uint8_t servoIndex, float angle) {
-  //int servoIndex = servoNumber;
 
   if (angle < SERVO_MIN_ANGLE[servoIndex]) {
     angle = SERVO_MIN_ANGLE[servoIndex];

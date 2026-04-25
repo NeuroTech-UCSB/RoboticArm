@@ -18,7 +18,7 @@ void setup() {
   }
 
   for (int i = 0; i < NUM_SERVOS; i++) {
-    writeAngle(i + 1, SERVO_INIT_ANGLE[i]);
+    writeAngle(i, SERVO_INIT_ANGLE[i]);
   }
 }
 
@@ -78,7 +78,15 @@ void readCommands() {
     return;
   }
 
-  writeAngle((int)servoNumber, (int)angle);
+  if (servoNumber == 2) {
+       Serial.println("Servo2: ");
+       Serial.print(angle);
+       int theta_real2 = -(((int)angle) - SERVO_ZERO_ANGLE[2]); 
+       writeAngle((int)2, theta_real2 );
+  } else {
+      writeAngle((int)servoNumber, (int)angle);
+  }
+
   digitalWrite(LED, angle > 0 ? HIGH : LOW);
 }
 
