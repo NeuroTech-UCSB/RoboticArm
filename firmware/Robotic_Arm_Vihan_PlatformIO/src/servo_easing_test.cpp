@@ -73,8 +73,13 @@ void readCommands() {
   // Parse angle (0-180)
   char *angleEnd = nullptr;
   long angle = strtol(args[1], &angleEnd, 10);
-  if (*angleEnd != '\0' || angle < SERVO_MIN || angle > SERVO_MAX) {
-    Serial.println("Input should be between 0 and 180");
+  if (*angleEnd != '\0' || angle < SERVO_MIN_ANGLE[servoNumber] || angle > SERVO_MAX_ANGLE[servoNumber]) {
+    Serial.print("Input for servo: ")
+    Serial.print(servoNumber);
+    Serial.print("should be between ");
+    Serial.print( SERVO_MIN_ANGLE[servoNumber]);
+    Serial.print("and ");
+    Serial.print( SERVO_MAX_ANGLE[servoNumber]);
     return;
   }
 
