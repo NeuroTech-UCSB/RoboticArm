@@ -37,6 +37,7 @@ import time
 import serial
 import ssl
 import certifi
+import socket
 from websockets.asyncio.client import connect
 
 # Mental-command action -> one-letter Arduino command.
@@ -170,6 +171,12 @@ class CortexClient:
         print("[CORTEX] Authorized")
         return token
 
+    async def generate_new_token(self, cortex_token, client_id, client_secret):
+        res = await self.request("generateNewToken", {"cortexToken": cortex_token, "clientId": client_id, "clientSecret": client_secret})
+        token = res["result"]["cortexToken"]
+        print("[CORTEX] Authorized")
+        return token
+
     async def query_headsets(self):
         res = await self.request("queryHeadsets", {})
         return res.get("result", [])
@@ -245,9 +252,17 @@ def parse_com_event(msg):
 
     return None, None
 
+def is_connected():
+    try:
+        # Connect to Google's public DNS server (8.8.8.8) on port 53
+        # Timeout is set to 3 seconds to avoid long hangs
+        socket.create_connection(("8.8.8.8", 53), timeout=3)
+        return True
+    except OSError:
+        return False
 
 # ===== 3) BRIDGE RUNTIME =====
-async def run_bridge(serial_port, baud, threshold, cooldown, cortex_url, client_id, client_secret, license_key, headset_id, profile, debug):
+async def run_bridge(serial_port, baud, threshold, cooldown, cortex_url, client_id, client_secret, license_key, headset_id, profile, debug, prev_token = None):
     # Open serial first so Arduino is ready before stream loop starts.
     serial_bridge = ArduinoBridge(
         serial_port=serial_port,
@@ -267,13 +282,30 @@ async def run_bridge(serial_port, baud, threshold, cooldown, cortex_url, client_
                 client_secret=client_secret
             )
 
-            # 1) Authorize app credentials and receive short-lived token.
-            # Token is required for almost all Cortex API calls after login.
-            token = await cortex.authorize(
-                client_id=client_id,
-                client_secret=client_secret,
-                license_key=license_key,
-            )
+            if is_connected():
+                # 1) Authorize app credentials and receive short-lived token.
+                # Token is required for almost all Cortex API calls after login.
+                token = await cortex.authorize(
+                    client_id=client_id,
+                    client_secret=client_secret,
+                    license_key=license_key,
+                )
+            else if prev_token is not None:
+                token = await cortex.generate_new_token(
+                    cortex_token=prev_token,
+                    client_id=client_id,
+                    client_secret=client_secret
+                )
+            else:
+                raise RuntimeError("Authorization failed. Please connect to the internet or check .env settings for cortexToken TOKEN.")
+
+            env_file = Path(".env")
+            with open(env_file, "w") as f:
+                f.write(f"EMOTIV_CLIENT_ID={client_id}\n")
+                f.write(f"EMOTIV_CLIENT_SECRET={client_secret}\n")
+                f.write(f"EMOTIV_LICENSE_KEY={license_key}\n")
+                f.write(f"TOKEN={token}\n")
+
             # 2) Discover connected headsets.
             headsets = await cortex.query_headsets()
             if not headsets:

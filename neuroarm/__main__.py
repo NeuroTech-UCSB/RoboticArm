@@ -15,6 +15,7 @@ DEFAULT_COOLDOWN_SEC = 0.25
 CLIENT_ID = os.getenv("EMOTIV_CLIENT_ID")
 CLIENT_SECRET = os.getenv("EMOTIV_CLIENT_SECRET")
 LICENSE_KEY = os.getenv("EMOTIV_LICENSE_KEY")
+TOKEN = os.getenv("TOKEN")
 
 # ===== CLI ARGUMENTS =====
 def build_parser():
@@ -47,7 +48,8 @@ def main():
             license_key=LICENSE_KEY,
             headset_id=args.headset_id,
             profile=args.profile,
-            debug=args.debug
+            debug=args.debug,
+            prev_token=TOKEN
         ))
     except KeyboardInterrupt:
         print("\n[SYS] Stopped")
