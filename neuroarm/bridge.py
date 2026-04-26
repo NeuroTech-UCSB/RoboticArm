@@ -49,6 +49,8 @@ ACTION_TO_CMD = {
     "pull": "B", 
     "rotate_left": "L",
     "rotate_right": "R",
+    "left": "L",
+    "right": "R",
     "lift": "U",
     "drop": "D",
 }
