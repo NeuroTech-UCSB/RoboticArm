@@ -39,6 +39,7 @@ import ssl
 import certifi
 import socket
 from websockets.asyncio.client import connect
+from pathlib import Path
 
 # Mental-command action -> one-letter Arduino command.
 # TODO: Confirm with Emotiv docs if Cortex sends "rotate left" or "rotate_left" etc. and adjust parsing logic accordingly.
