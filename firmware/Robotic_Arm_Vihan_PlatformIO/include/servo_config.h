@@ -32,6 +32,7 @@ ServoEasing servos[NUM_SERVOS];
 //Link Lengths
 #define L1 63.5 //From Base to second Link
 #define L2 127  //From start of second link to end of grasper
+#define EPS 3 //error of 3 mm
 
 const float SERVO_PINS[NUM_SERVOS] = {SERVO1_PIN, SERVO2_PIN, SERVO3_PIN, SERVO4_PIN};
 
@@ -50,11 +51,19 @@ float SERVO_ANGLES[NUM_SERVOS] = {SERVO_INIT_ANGLE[0], SERVO_INIT_ANGLE[1], SERV
 
 void writeAngle(uint8_t servoIndex, float angle) {
 
-  if (angle < SERVO_MIN_ANGLE[servoIndex]) {
+  /*if (angle < SERVO_MIN_ANGLE[servoIndex]) {
     angle = SERVO_MIN_ANGLE[servoIndex];
   } else if (angle > SERVO_MAX_ANGLE[servoIndex]) {
     angle = SERVO_MAX_ANGLE[servoIndex];
+  }*/
+
+  if (angle < SERVO_MIN) {
+    angle = SERVO_MIN;
+  } else if (angle > SERVO_MAX) {
+    angle = SERVO_MAX;
   }
+
+
 
   SERVO_ANGLES[servoIndex] = angle;
 

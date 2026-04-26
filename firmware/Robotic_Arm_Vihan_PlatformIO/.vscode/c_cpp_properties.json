@@ -10,9 +10,9 @@
             "includePath": [
                 "/Users/vihan/Desktop/Neurotech@UCSB/RoboticArm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/include",
                 "/Users/vihan/Desktop/Neurotech@UCSB/RoboticArm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/src",
-                "/Users/vihan/Desktop/Neurotech@UCSB/RoboticArm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/.pio/libdeps/servo_easing_test/ServoEasing/src",
+                "/Users/vihan/Desktop/Neurotech@UCSB/RoboticArm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/.pio/libdeps/servo_traj_test/ServoEasing/src",
                 "/Users/vihan/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
-                "/Users/vihan/Desktop/Neurotech@UCSB/RoboticArm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/.pio/libdeps/servo_easing_test/Servo/src",
+                "/Users/vihan/Desktop/Neurotech@UCSB/RoboticArm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/.pio/libdeps/servo_traj_test/Servo/src",
                 "/Users/vihan/.platformio/packages/framework-arduino-avr/cores/arduino",
                 "/Users/vihan/.platformio/packages/framework-arduino-avr/variants/standard",
                 "/Users/vihan/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
@@ -26,9 +26,9 @@
                 "path": [
                     "/Users/vihan/Desktop/Neurotech@UCSB/RoboticArm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/include",
                     "/Users/vihan/Desktop/Neurotech@UCSB/RoboticArm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/src",
-                    "/Users/vihan/Desktop/Neurotech@UCSB/RoboticArm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/.pio/libdeps/servo_easing_test/ServoEasing/src",
+                    "/Users/vihan/Desktop/Neurotech@UCSB/RoboticArm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/.pio/libdeps/servo_traj_test/ServoEasing/src",
                     "/Users/vihan/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
-                    "/Users/vihan/Desktop/Neurotech@UCSB/RoboticArm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/.pio/libdeps/servo_easing_test/Servo/src",
+                    "/Users/vihan/Desktop/Neurotech@UCSB/RoboticArm/RoboticArm/firmware/Robotic_Arm_Vihan_PlatformIO/.pio/libdeps/servo_traj_test/Servo/src",
                     "/Users/vihan/.platformio/packages/framework-arduino-avr/cores/arduino",
                     "/Users/vihan/.platformio/packages/framework-arduino-avr/variants/standard",
                     "/Users/vihan/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",

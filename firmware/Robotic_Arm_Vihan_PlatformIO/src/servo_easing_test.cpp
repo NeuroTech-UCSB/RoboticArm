@@ -65,28 +65,33 @@ void readCommands() {
   // Parse servo number (1-4)
   char *servoEnd = nullptr;
   long servoNumber = strtol(args[0], &servoEnd, 10);
-  if (*servoEnd != '\0' || servoNumber < 1 || servoNumber > NUM_SERVOS) {
-    Serial.println("Servo number should be between 1 and 4");
+  if (*servoEnd != '\0' || servoNumber < 0 || servoNumber > NUM_SERVOS-1) {
+    Serial.println("Servo number should be between 0 and 3");
     return;
   }
 
   // Parse angle (0-180)
   char *angleEnd = nullptr;
   long angle = strtol(args[1], &angleEnd, 10);
+  Serial.print("Read angle ");
+  Serial.println(angle);
   if (*angleEnd != '\0' || angle < SERVO_MIN_ANGLE[servoNumber] || angle > SERVO_MAX_ANGLE[servoNumber]) {
-    Serial.print("Input for servo: ")
+    Serial.print("Input for servo ");
     Serial.print(servoNumber);
-    Serial.print("should be between ");
+    Serial.print(" should be between ");
     Serial.print( SERVO_MIN_ANGLE[servoNumber]);
     Serial.print("and ");
     Serial.print( SERVO_MAX_ANGLE[servoNumber]);
     return;
   }
 
+  Serial.print("Servo: ");
+  Serial.println(servoNumber);
+  Serial.print(angle);
   if (servoNumber == 2) {
-       Serial.println("Servo2: ");
-       Serial.print(angle);
        int theta_real2 = -(((int)angle) - SERVO_ZERO_ANGLE[2]); 
+       Serial.print("Servo2 ");
+       Serial.println(theta_real2);
        writeAngle((int)2, theta_real2 );
   } else {
       writeAngle((int)servoNumber, (int)angle);
