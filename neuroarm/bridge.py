@@ -290,7 +290,7 @@ async def run_bridge(serial_port, baud, threshold, cooldown, cortex_url, client_
                     client_secret=client_secret,
                     license_key=license_key,
                 )
-            else if prev_token is not None:
+            elif prev_token is not None:
                 token = await cortex.generate_new_token(
                     cortex_token=prev_token,
                     client_id=client_id,
