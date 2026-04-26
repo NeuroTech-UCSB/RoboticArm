@@ -5,7 +5,7 @@
 #define MAX_TOKENS 8
 
 //SERVO DEFINITIONS
-#define SERVO01 1
+#define SERVO1 0
 #define SERVO2 1
 #define SERVO3 2
 #define SERVO4 3
@@ -32,7 +32,7 @@ const uint8_t SERVO_PINS[NUM_SERVOS] = {SERVO1_PIN, SERVO2_PIN, SERVO3_PIN, SERV
 
 const uint8_t SERVO_MAX_ANGLE[NUM_SERVOS] = {180, 135, 175, 150};
 //Should stay at around 90 for "mid position"
-const uint8_t SERVO_INIT_ANGLE[NUM_SERVOS] = {97, 95, 90, 90};
+const uint8_t SERVO_INIT_ANGLE[NUM_SERVOS] = {97, 95, 90, 110};
 const uint8_t SERVO_MIN_ANGLE[NUM_SERVOS] = {0, 15, 30, 40};
 
 
@@ -170,47 +170,46 @@ void loop() {
 
   if (cmd_state == PUSH && state == 0) {
     state++;
-    if (SERVO_ANGLES[SERVO2] > SERVO_MIN_ANGLE[SERVO2] && SERVO_ANGLES[SERVO3] > SERVO_MIN_ANGLE[SERVO3]) {
-      Serial.println("Pushing...");
-      servos[SERVO2].setEaseTo(SERVO_MAX_ANGLE[SERVO2]);
-      servos[SERVO3].setEaseTo(SERVO_MAX_ANGLE[SERVO3]);
+    Serial.print("State: ");
+    Serial.println(state);
+    servos[SERVO2].setEaseTo(0);
+    servos[SERVO3].setEaseTo(50);
       
-      synchronizeAllServosAndStartInterrupt(false);
-      updateAndWaitForAllServosToStop();
-    } 
-    if (SERVO_ANGLES[SERVO2] <= SERVO_MIN_ANGLE[SERVO2] || SERVO_ANGLES[SERVO3] <= SERVO_MIN_ANGLE[SERVO3]) {
-      Pushing = false;
-      Pulling = true;
-      servos[SERVO4].easeTo(90);
-    }
+    synchronizeAllServosAndStartInterrupt(false);
+    updateAndWaitForAllServosToStop();
+
+    servos[SERVO4].easeTo(60);
   }
 
   else if ( cmd_state == PULL && state ==1) {
     state++;
-    if (SERVO_ANGLES[SERVO2] <= SERVO_MAX_ANGLE[SERVO2] && SERVO_ANGLES[SERVO3] <= SERVO_MAX_ANGLE[SERVO3]){
-      Serial.println("Pulling...");
-      servos[SERVO2].setEaseTo(SERVO_MIN_ANGLE[SERVO2]);
-      servos[SERVO3].setEaseTo(SERVO_MIN_ANGLE[SERVO3]);
+    Serial.print("State: ");
+    Serial.println(state);
+    servos[SERVO2].setEaseTo(90);
+    servos[SERVO3].setEaseTo(120);
       
-      synchronizeAllServosAndStartInterrupt(false);
-      updateAndWaitForAllServosToStop();
-      if (SERVO_ANGLES[SERVO2] >= SERVO_MAX_ANGLE[SERVO2] || SERVO_ANGLES[SERVO3] >= SERVO_MAX_ANGLE[SERVO3]) {
-        Pulling = false;
-        Rotating = true;
-      }
-    }
+    synchronizeAllServosAndStartInterrupt(false);
+    updateAndWaitForAllServosToStop();
   }
 
   else if (cmd_state == LEFT && state == 2) {
     state++;
-    if (SERVO_ANGLES[BASE_SERVO] < SERVO_MAX_ANGLE[BASE_SERVO]) {
-      Serial.println("Rotating...");
-      //servo1. EaseTo();
-      if (SERVO_ANGLES[BASE_SERVO] >= SERVO_MAX_ANGLE[BASE_SERVO]) {
-       Rotating = false;
-       Pushing = true;
-      }
-    }
+    Serial.print("State: ");
+    Serial.println(state);
+    servos[SERVO1].easeTo(180);
+  }
+
+  else if (cmd_state == PUSH && state == 3) {
+    state++;
+    Serial.print("State: ");
+    Serial.println(state);
+    servos[SERVO2].setEaseTo(0);
+    servos[SERVO3].setEaseTo(50);
+      
+    synchronizeAllServosAndStartInterrupt(false);
+    updateAndWaitForAllServosToStop();
+    
+    servos[SERVO4].easeTo(110);
   }
 
   delay(10);
