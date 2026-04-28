@@ -63,8 +63,6 @@ void writeAngle(uint8_t servoIndex, float angle) {
     angle = SERVO_MAX;
   }
 
-
-
   SERVO_ANGLES[servoIndex] = angle;
 
   servos[servoIndex].startEaseTo(angle);

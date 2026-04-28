@@ -159,7 +159,6 @@ void readCommands() {
     Serial.println("mm."); 
     return;
   }*/
-
   if ( *y_str != '\0' || *x_str != '\0' ) {
     Serial.println("Please enter two coordinates (x,y) in mm"); 
     return; 
